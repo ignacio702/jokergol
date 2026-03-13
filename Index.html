@@ -596,65 +596,99 @@
   </style>
 </head>
 <body>
-  <script>
-    const REGISTER_URL = "https://trkrdr0.com/link/HXm3eB3Ope?affS1=land";
-    const JOKERGOL_LOGIN_URL = "https://trkrdr0.com/link/WRGKPpdq7o?affS1=land";
+<script>
+  const REGISTER_URL = "https://trkrdr0.com/link/HXm3eB3Ope?affS1=land";
+  const JOKERGOL_LOGIN_URL = "https://trkrdr0.com/link/WRGKPpdq7o?affS1=land";
 
-    function getQueryString() {
-      return window.location.search || "";
-    }
+  function buildTrackedUrl(baseUrl) {
+    const incomingParams = new URLSearchParams(window.location.search);
+    const finalUrl = new URL(baseUrl);
 
-    function buildTrackedUrl(baseUrl) {
-      const incomingParams = new URLSearchParams(window.location.search);
-      const finalUrl = new URL(baseUrl);
-
-      incomingParams.forEach((value, key) => {
-        finalUrl.searchParams.set(key, value);
-      });
-
-      return finalUrl.toString();
-    }
-
-    function trackRegisterClick(buttonLabel) {
-      if (typeof fbq === "function") {
-        fbq('track', 'Lead', {
-          content_name: 'JokerGol Registro',
-          content_category: 'Registro',
-          button_name: buttonLabel
-        });
-      }
-    }
-
-    function bindTrackedLink(elementId, baseUrl, buttonLabel) {
-      const el = document.getElementById(elementId);
-      if (!el) return;
-
-      el.href = buildTrackedUrl(baseUrl);
-
-      el.addEventListener("click", function() {
-        trackRegisterClick(buttonLabel);
-      });
-    }
-
-    function bindSimpleLink(elementId, baseUrl) {
-      const el = document.getElementById(elementId);
-      if (!el) return;
-      el.href = buildTrackedUrl(baseUrl);
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-      bindTrackedLink("btnTopRegister", REGISTER_URL, "top_register");
-      bindTrackedLink("btnHeroRegister", REGISTER_URL, "hero_register");
-      bindTrackedLink("btnCardRegister", REGISTER_URL, "hero_card_register");
-      bindTrackedLink("btnPromo1", REGISTER_URL, "promo_1_register");
-      bindTrackedLink("btnPromo2", REGISTER_URL, "promo_2_register");
-      bindTrackedLink("btnPromo3", REGISTER_URL, "promo_3_register");
-      bindTrackedLink("btnPromo4", REGISTER_URL, "promo_4_register");
-      bindTrackedLink("btnPromoVip", REGISTER_URL, "promo_vip_register");
-      bindTrackedLink("btnBottomRegister", REGISTER_URL, "bottom_register");
-      bindSimpleLink("btnLogin", JOKERGOL_LOGIN_URL);
+    incomingParams.forEach((value, key) => {
+      finalUrl.searchParams.set(key, value);
     });
-  </script>
+
+    return finalUrl.toString();
+  }
+
+  function redirectTo(url) {
+    window.location.href = url;
+  }
+
+  function trackRegisterAndRedirect(url, buttonLabel) {
+
+    let redirected = false;
+
+    function safeRedirect() {
+      if (redirected) return;
+      redirected = true;
+      redirectTo(url);
+    }
+
+    if (typeof fbq === "function") {
+
+      fbq('track', 'Lead', {
+        content_name: 'JokerGol Registro',
+        content_category: 'Registro',
+        button_name: buttonLabel
+      });
+
+      fbq('trackCustom', 'OutboundRegisterClick', {
+        button_name: buttonLabel,
+        destination_url: url
+      });
+
+      setTimeout(safeRedirect, 300);
+
+    } else {
+      safeRedirect();
+    }
+  }
+
+  function bindTrackedLink(elementId, baseUrl, buttonLabel) {
+
+    const el = document.getElementById(elementId);
+    if (!el) return;
+
+    const finalUrl = buildTrackedUrl(baseUrl);
+
+    el.href = finalUrl;
+
+    el.addEventListener("click", function(e) {
+
+      e.preventDefault();
+
+      trackRegisterAndRedirect(finalUrl, buttonLabel);
+
+    });
+
+  }
+
+  function bindSimpleLink(elementId, baseUrl) {
+
+    const el = document.getElementById(elementId);
+    if (!el) return;
+
+    el.href = buildTrackedUrl(baseUrl);
+
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+
+    bindTrackedLink("btnTopRegister", REGISTER_URL, "top_register");
+    bindTrackedLink("btnHeroRegister", REGISTER_URL, "hero_register");
+    bindTrackedLink("btnCardRegister", REGISTER_URL, "hero_card_register");
+    bindTrackedLink("btnPromo1", REGISTER_URL, "promo_1_register");
+    bindTrackedLink("btnPromo2", REGISTER_URL, "promo_2_register");
+    bindTrackedLink("btnPromo3", REGISTER_URL, "promo_3_register");
+    bindTrackedLink("btnPromo4", REGISTER_URL, "promo_4_register");
+    bindTrackedLink("btnPromoVip", REGISTER_URL, "promo_vip_register");
+    bindTrackedLink("btnBottomRegister", REGISTER_URL, "bottom_register");
+
+    bindSimpleLink("btnLogin", JOKERGOL_LOGIN_URL);
+
+  });
+</script>
 
   <header class="topbar">
     <div class="container topbar-inner">
@@ -904,4 +938,5 @@
     </div>
   </footer>
 </body>
+
 </html>
