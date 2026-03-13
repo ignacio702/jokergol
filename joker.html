@@ -137,8 +137,8 @@
     }
 
     .btn {
-      min-height: 52px;
-      padding: 0 24px;
+      min-height: 58px;
+      padding: 0 30px;
       border-radius: 999px;
       font-weight: 800;
       display: inline-flex;
@@ -149,7 +149,7 @@
       cursor: pointer;
       text-align: center;
       letter-spacing: 0.2px;
-      font-size: 16px;
+      font-size: 17px;
     }
 
     .btn:hover {
@@ -173,7 +173,14 @@
       color: #fff;
       border-color: rgba(255, 255, 255, 0.15);
     }
-
+    
+    .cta-microcopy{
+      margin-top:10px;
+      color:var(--muted-2);
+      font-size:13px;
+      line-height:1.5;
+    }
+    
     .hero {
       padding: 54px 0 24px;
     }
@@ -501,7 +508,18 @@
       line-height: 1.65;
       font-size: 15px;
     }
-
+    .offer-main-badge{
+      display:inline-block;
+      margin:0 0 18px;
+      padding:14px 18px;
+      border-radius:18px;
+      background:rgba(247,198,47,0.12);
+      border:1px solid rgba(247,198,47,0.22);
+      color:#fff4c7;
+      font-size:22px;
+      font-weight:800;
+      line-height:1.35;
+    }
     .offer-list li strong,
     .mini-list li strong {
       color: #fff;
@@ -693,6 +711,12 @@
           content_category: 'Registro',
           button_name: buttonLabel
         });
+        
+        fbq('track', 'InitiateCheckout', {
+          content_name: 'JokerGol Registro',
+          content_category: 'Registro',
+          button_name: buttonLabel
+        });
 
         fbq('trackCustom', 'OutboundRegisterClick', {
           button_name: buttonLabel,
@@ -754,6 +778,9 @@
         <div class="hero-copy">
           <div class="eyebrow">Promociones activas · JokerGol</div>
           <h1>Regístrate en JokerGol y activa tus promociones de bienvenida</h1>
+          <div class="offer-main-badge">
+            100% en tu primer depósito + 20 Free Spins
+          </div>
           <p>
             Accede en minutos a una plataforma moderna, pagos rápidos y una experiencia con el RTP más alto del mercado.
           </p>
@@ -766,6 +793,9 @@
 
           <div class="hero-cta">
             <a class="btn btn-primary" id="btnHeroRegister" href="#">CREAR CUENTA AHORA</a>
+            <div class="cta-microcopy">
+              Registro seguro • toma menos de 1 minuto
+            </div>
           </div>
 
           <div class="hero-note">
