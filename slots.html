@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JokerGol | Prueba tu suerte</title>
+  <meta name="description" content="Prueba tu suerte en JokerGol y descubre si desbloqueaste premios sorpresa. Si ganas, regístrate para continuar en JokerGol." />
+  <style>
+    :root {
+      --bg-1: #090f1c;
+      --bg-2: #111827;
+      --bg-3: #0f172a;
+      --card: rgba(15, 23, 42, 0.84);
+      --gold: #facc15;
+      --gold-2: #fde68a;
+      --green: #22c55e;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --line: rgba(255,255,255,0.12);
+      --shadow: 0 24px 60px rgba(0,0,0,.38);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(250, 204, 21, 0.14), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.10), transparent 22%),
+        linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 42%, var(--bg-3) 100%);
+      min-height: 100vh;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 26px 0 44px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 28px rgba(0,0,0,.18);
+    }
+
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #fef08a, #f59e0b);
+      box-shadow: 0 12px 26px rgba(250, 204, 21, .24);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 19px;
+      letter-spacing: .02em;
+    }
+
+    .brand-copy span {
+      display: block;
+      font-size: 12px;
+      color: var(--gold-2);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      margin-top: 2px;
+    }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: 1.04fr .96fr;
+      gap: 28px;
+      align-items: center;
+      padding-top: 28px;
+    }
+
+    .eyebrow {
+      color: var(--gold-2);
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 6vw, 62px);
+      line-height: .96;
+      margin: 0 0 14px;
+      text-wrap: balance;
+    }
+
+    .lead {
+      font-size: clamp(17px, 2vw, 20px);
+      color: var(--muted);
+      line-height: 1.58;
+      max-width: 680px;
+      margin: 0 0 24px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: #e2e8f0;
+      font-size: 14px;
+    }
+
+    .game-shell {
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 30px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-shell::before {
+      content: "";
+      position: absolute;
+      inset: -38% auto auto -18%;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(250,204,21,.22), transparent 70%);
+      pointer-events: none;
+    }
+
+    .slot-card {
+      position: relative;
+      z-index: 1;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 26px;
+      padding: 22px;
+      backdrop-filter: blur(12px);
+    }
+
+    .slot-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .slot-head h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .slot-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .promo-pill {
+      font-size: 13px;
+      color: #111827;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fef08a, #facc15);
+      padding: 8px 12px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .slot-frame {
+      position: relative;
+      padding: 18px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #1f2937 0%, #111827 100%);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+      overflow: hidden;
+    }
+
+    .slot-frame::before,
+    .slot-frame::after {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      height: 64px;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .slot-frame::before {
+      top: 18px;
+      background: linear-gradient(180deg, rgba(17,24,39,.88), rgba(17,24,39,0));
+    }
+
+    .slot-frame::after {
+      bottom: 18px;
+      background: linear-gradient(180deg, rgba(17,24,39,0), rgba(17,24,39,.88));
+    }
+
+    .win-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(33.333% + 5px);
+      transform: none;
+      height: calc(33.333% - 10px);
+      border-radius: 18px;
+      border: 2px solid rgba(250, 204, 21, .45);
+      background: rgba(250, 204, 21, .10);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.04) inset;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .reels {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .reel {
+      position: relative;
+      height: 216px;
+      overflow: hidden;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: inset 0 8px 18px rgba(255,255,255,.04), inset 0 -12px 22px rgba(0,0,0,.18);
+      padding: 12px 0;
+    }
+
+    .reel-grid {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 10px;
+      height: 100%;
+      padding: 0 10px;
+    }
+
+    .symbol-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 8px 18px rgba(0,0,0,.16);
+      min-height: 0;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+
+    .symbol-cell.spinning {
+      transform: translateY(-6px);
+      opacity: .88;
+    }
+
+    .symbol-glyph {
+      font-weight: 800;
+      font-size: 34px;
+      line-height: 1;
+      user-select: none;
+      text-shadow: 0 4px 14px rgba(0,0,0,.22);
+      color: #fff7ed;
+    }
+
+    .symbol-cell.red .symbol-glyph { color: #fca5a5; }
+    .symbol-cell.gold .symbol-glyph { color: #fde68a; }
+    .symbol-cell.green .symbol-glyph { color: #bbf7d0; }
+    .symbol-cell.blue .symbol-glyph { color: #bfdbfe; }
+
+    .status {
+      min-height: 56px;
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-top: 16px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.06);
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 700;
+      line-height: 1.38;
+    }
+
+    .status.win {
+      background: rgba(250, 204, 21, .12);
+      border-color: rgba(250, 204, 21, .32);
+      color: #fef3c7;
+    }
+
+    .spin-meta {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 16px 0 0;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 16px;
+      padding: 15px 22px;
+      font-size: 16px;
+      font-weight: 700;
+      transition: .2s transform ease, .2s opacity ease, .2s box-shadow ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), #f59e0b);
+      color: #111827;
+      box-shadow: 0 14px 28px rgba(245, 158, 11, .24);
+    }
+
+    .spin-note {
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+
+    .result-panel {
+      margin-top: 18px;
+      display: none;
+      gap: 16px;
+      flex-direction: column;
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(34,197,94,.12), rgba(34,197,94,.05));
+      border: 1px solid rgba(34,197,94,.26);
+    }
+
+    .result-panel.show { display: flex; }
+
+    .win-title {
+      font-size: clamp(24px, 4vw, 34px);
+      font-weight: 800;
+      margin: 0;
+      text-align: center;
+    }
+
+    .win-copy {
+      margin: 0;
+      color: #dcfce7;
+      text-align: center;
+      line-height: 1.65;
+    }
+
+    .timer-boxes {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .time-box {
+      min-width: 88px;
+      border-radius: 18px;
+      padding: 14px 12px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
+      text-align: center;
+    }
+
+    .time-num {
+      display: block;
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .time-label {
+      display: block;
+      margin-top: 6px;
+      color: #d1fae5;
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 26px 0 34px;
+      background: rgba(0,0,0,.18);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .footer-note {
+      font-size: 14px;
+      color: #cbd5e1;
+      line-height: 1.6;
+      max-width: 920px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .footer-links a,
+    .footer-links span {
+      color: var(--gold-2);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .footer-links span {
+      text-decoration: none;
+      color: #e5e7eb;
+    }
+
+    .age-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      border: 2px solid rgba(250,204,21,.55);
+      background: rgba(250,204,21,.12);
+      color: #fef3c7 !important;
+      font-weight: 800;
+      text-decoration: none !important;
+      box-shadow: 0 10px 20px rgba(0,0,0,.18);
+    }
+
+    @media (max-width: 940px) {
+      .top-grid { grid-template-columns: 1fr; }
+      .slot-head { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 620px) {
+      .wrap { width: min(100% - 22px, 1120px); }
+      .hero { padding-top: 16px; }
+      .slot-card, .game-shell { padding: 14px; }
+      .timer-boxes { gap: 8px; }
+      .time-box { min-width: 78px; }
+      .lead { font-size: 16px; }
+      .reel { height: 228px; }
+      .symbol, .win-line { height: 76px; }
+      .symbol-inner { width: 56px; height: 56px; font-size: 30px; }
+    }
+  </style>
+
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', 'YOUR_PIXEL_ID');
+    fbq('track', 'PageView');
+    fbq('track', 'ViewContent', {
+      content_name: 'JokerGol Spin Promo',
+      content_category: 'Landing Promo',
+      promo_name: 'Premios Sorpresa'
+    });
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1" />
+  </noscript>
+</head>
+<body>
+  <main class="hero">
+    <div class="wrap">
+      <div class="brand" aria-label="JokerGol">
+        <div class="brand-logo" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <rect x="10" y="8" width="44" height="48" rx="10" fill="#0f172a"/>
+            <path d="M32 18C28.7 18 26 20.7 26 24C26 26.8 27.9 29.1 30.4 29.8V35.5H25.5C23.6 35.5 22 37.1 22 39C22 40.9 23.6 42.5 25.5 42.5H38.5C40.4 42.5 42 40.9 42 39C42 37.1 40.4 35.5 38.5 35.5H33.6V29.8C36.1 29.1 38 26.8 38 24C38 20.7 35.3 18 32 18Z" fill="#FACC15"/>
+            <circle cx="24" cy="22" r="2" fill="#FACC15"/>
+            <circle cx="40" cy="22" r="2" fill="#FACC15"/>
+            <path d="M24 48H40" stroke="#FACC15" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="brand-copy">
+          <strong>JokerGol</strong>
+          <span>Premios sorpresa</span>
+        </div>
+      </div>
+
+      <section class="top-grid">
+        <div>
+          <div class="eyebrow">Promoción exclusiva</div>
+          <h1>Prueba tu suerte</h1>
+          <p class="lead">
+            Activa tus premios sorpresa.
+          </p>
+
+          <div class="chips">
+            <span class="chip">Registro simple</span>
+            <span class="chip">Pago rápido</span>
+            <span class="chip">Seguro y confiable</span>
+          </div>
+        </div>
+
+        <div class="game-shell" id="promoSlot">
+          <div class="slot-card">
+            <div class="slot-head">
+              <div>
+                <h2>Prueba tu suerte</h2>
+                <p>Activa tus premios sorpresa.</p>
+              </div>
+              <div class="promo-pill">Premios sorpresa</div>
+            </div>
+
+            <div class="slot-frame" aria-live="polite">
+              <div class="win-line" aria-hidden="true"></div>
+              <div class="reels" id="reels"></div>
+              <div class="status" id="statusBox">
+                Giros restantes: 3
+              </div>
+            </div>
+
+            <div class="spin-meta">
+              <button class="btn btn-primary" id="spinBtn">Girar ahora</button>
+            </div>
+
+            <div class="result-panel" id="resultPanel">
+              <h2 class="win-title">¡Premio desbloqueado!</h2>
+              <p class="win-copy">
+                Completa ahora tu registro en JokerGol para activar tus premios sorpresa antes de que finalice el tiempo.
+              </p>
+
+              <div class="timer-boxes" aria-label="Tiempo restante de la promo">
+                <div class="time-box">
+                  <span class="time-num" id="minutes">02</span>
+                  <span class="time-label">Min</span>
+                </div>
+                <div class="time-box">
+                  <span class="time-num" id="seconds">00</span>
+                  <span class="time-label">Seg</span>
+                </div>
+              </div>
+
+              <a class="btn btn-primary" id="registerBtn" href="#" target="_blank" rel="noopener noreferrer" style="display:none;">Regístrate ya</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-note">
+        Exclusivo para mayores de 18 años. Promoción sujeta a términos y condiciones vigentes y aplicable a nuevos usuarios según la configuración comercial de JokerGol.
+      </div>
+      <div class="footer-links">
+        <span class="age-badge">+18</span>
+        <a href="https://jokergol.com/antispam" target="_blank" rel="noopener noreferrer">Política Anti Spam</a>
+        <a href="https://jokergol.com/responsible-gaming" target="_blank" rel="noopener noreferrer">Juego responsable</a>
+        <a href="https://jokergol.com/terms" target="_blank" rel="noopener noreferrer">Términos y condiciones</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const CONFIG = {
+      REGISTER_URL: 'https://www.jokergol.com/live',
+      COUNTDOWN_SECONDS: 120,
+      WIN_CHANCE: 0.22,
+      SPIN_MS: 1450,
+      ATTEMPTS_TOTAL: 3,
+      SYMBOLS: [
+        { char: '7', cls: 'gold' },
+        { char: '★', cls: 'gold' },
+        { char: 'J', cls: 'green' },
+        { char: 'Q', cls: 'blue' },
+        { char: 'K', cls: 'blue' },
+        { char: '♥', cls: 'red' },
+        { char: '♦', cls: 'red' },
+        { char: '♣', cls: 'green' },
+        { char: '♠', cls: 'green' }
+      ]
+    };
+
+    const reelsContainer = document.getElementById('reels');
+    const statusBox = document.getElementById('statusBox');
+    const spinBtn = document.getElementById('spinBtn');
+    const resultPanel = document.getElementById('resultPanel');
+    const registerBtn = document.getElementById('registerBtn');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+
+    const reelEls = [];
+    let isSpinning = false;
+    let countdownInterval = null;
+    let countdown = CONFIG.COUNTDOWN_SECONDS;
+    let attemptsLeft = CONFIG.ATTEMPTS_TOTAL;
+
+    registerBtn.href = CONFIG.REGISTER_URL;
+
+    function trackEvent(name, params = {}) {
+      if (typeof fbq === 'function') {
+        fbq('trackCustom', name, params);
+      }
+    }
+
+    function trackStandardEvent(name, params = {}) {
+      if (typeof fbq === 'function') {
+        fbq('track', name, params);
+      }
+    }
+
+    function randomSymbol() {
+      return CONFIG.SYMBOLS[Math.floor(Math.random() * CONFIG.SYMBOLS.length)];
+    }
+
+    function buildCell(symbolData) {
+      const cell = document.createElement('div');
+      cell.className = `symbol-cell ${symbolData.cls}`;
+      cell.innerHTML = `<span class="symbol-glyph">${symbolData.char}</span>`;
+      return cell;
+    }
+
+    function setCell(cell, symbolData) {
+      cell.className = `symbol-cell ${symbolData.cls}`;
+      cell.innerHTML = `<span class="symbol-glyph">${symbolData.char}</span>`;
+    }
+
+    function buildReel() {
+      const reel = document.createElement('div');
+      reel.className = 'reel';
+      const grid = document.createElement('div');
+      grid.className = 'reel-grid';
+      const cells = [];
+      for (let i = 0; i < 3; i++) {
+        const cell = buildCell(randomSymbol());
+        grid.appendChild(cell);
+        cells.push(cell);
+      }
+      reel.appendChild(grid);
+      reelsContainer.appendChild(reel);
+      reelEls.push({ reel, grid, cells });
+    }
+
+    function setStatus(message, isWin = false) {
+      statusBox.textContent = message;
+      statusBox.classList.toggle('win', isWin);
+    }
+
+    function remainingText() {
+      return `Giros restantes: ${attemptsLeft}`;
+    }
+
+    function formatTime(totalSeconds) {
+      const mins = Math.floor(totalSeconds / 60);
+      const secs = totalSeconds % 60;
+      minutesEl.textContent = String(mins).padStart(2, '0');
+      secondsEl.textContent = String(secs).padStart(2, '0');
+    }
+
+    function startCountdown() {
+      clearInterval(countdownInterval);
+      countdown = CONFIG.COUNTDOWN_SECONDS;
+      formatTime(countdown);
+
+      trackEvent('CountdownStarted', {
+        countdown_seconds: CONFIG.COUNTDOWN_SECONDS,
+        promo_name: 'Premios Sorpresa'
+      });
+
+      countdownInterval = setInterval(() => {
+        countdown -= 1;
+        if (countdown <= 0) {
+          clearInterval(countdownInterval);
+          countdown = 0;
+          formatTime(countdown);
+          setStatus('Giros restantes: 3', false);
+          resultPanel.classList.remove('show');
+          spinBtn.textContent = 'Girar ahora';
+          spinBtn.disabled = false;
+          spinBtn.dataset.mode = 'spin';
+          attemptsLeft = CONFIG.ATTEMPTS_TOTAL;
+          return;
+        }
+        formatTime(countdown);
+      }, 1000);
+    }
+
+    function getFinalBoard(isWinner) {
+      const board = [
+        [randomSymbol(), randomSymbol(), randomSymbol()],
+        [randomSymbol(), randomSymbol(), randomSymbol()],
+        [randomSymbol(), randomSymbol(), randomSymbol()]
+      ];
+
+      if (isWinner) {
+        const winSymbol = { char: '7', cls: 'gold' };
+        board[1] = [winSymbol, winSymbol, winSymbol];
+      } else {
+        while (board[1][0].char === board[1][1].char && board[1][1].char === board[1][2].char) {
+          board[1][2] = randomSymbol();
+        }
+      }
+      return board;
+    }
+
+    function animateSpin(isWinner) {
+      const board = getFinalBoard(isWinner);
+      const intervalRefs = [];
+
+      reelEls.forEach(({ cells }, reelIndex) => {
+        cells.forEach(cell => cell.classList.add('spinning'));
+        const interval = setInterval(() => {
+          cells.forEach(cell => setCell(cell, randomSymbol()));
+        }, 90 + reelIndex * 15);
+        intervalRefs.push(interval);
+
+        setTimeout(() => {
+          clearInterval(interval);
+          cells.forEach((cell, rowIndex) => {
+            setCell(cell, board[rowIndex][reelIndex]);
+            cell.classList.remove('spinning');
+          });
+        }, CONFIG.SPIN_MS - 220 + reelIndex * 120);
+      });
+
+      return board[1];
+    }
+
+    function revealWin() {
+      resultPanel.classList.add('show');
+      setStatus('¡Premio desbloqueado!', true);
+      startCountdown();
+      spinBtn.textContent = 'Reclama tu premio';
+      spinBtn.disabled = false;
+      spinBtn.dataset.mode = 'claim';
+
+      trackEvent('PrizeUnlocked', {
+        prize_name: 'Premios Sorpresa',
+        promo_name: 'Premios Sorpresa'
+      });
+
+      trackStandardEvent('Lead', {
+        content_name: 'Prize Unlocked',
+        prize_name: 'Premios Sorpresa'
+      });
+    }
+
+    function resetAttemptsIfNeeded() {
+      if (attemptsLeft <= 0) {
+        attemptsLeft = CONFIG.ATTEMPTS_TOTAL;
+      }
+    }
+
+    function handleSpin() {
+      if (isSpinning) return;
+      if (spinBtn.dataset.mode === 'claim') {
+        window.open(CONFIG.REGISTER_URL, '_blank', 'noopener');
+        trackEvent('OutboundRegisterClick', {
+          destination: CONFIG.REGISTER_URL,
+          prize_name: 'Premios Sorpresa'
+        });
+        trackStandardEvent('Contact', {
+          content_name: 'JokerGol Register Click',
+          prize_name: 'Premios Sorpresa'
+        });
+        return;
+      }
+      if (resultPanel.classList.contains('show')) return;
+
+      isSpinning = true;
+      spinBtn.disabled = true;
+      setStatus('Girando rodillos...', false);
+
+      trackEvent('SpinAttempt', {
+        promo_name: 'Premios Sorpresa'
+      });
+
+      const isWinner = Math.random() < CONFIG.WIN_CHANCE;
+      attemptsLeft = Math.max(0, attemptsLeft - 1);
+      animateSpin(isWinner);
+
+      setTimeout(() => {
+        if (isWinner) {
+          revealWin();
+        } else {
+          setStatus(remainingText(), false);
+          resetAttemptsIfNeeded();
+          spinBtn.disabled = false;
+        }
+        isSpinning = false;
+      }, CONFIG.SPIN_MS + 220);
+    }
+
+    spinBtn.addEventListener('click', handleSpin);
+
+    registerBtn.addEventListener('click', () => {
+      trackEvent('OutboundRegisterClick', {
+        destination: CONFIG.REGISTER_URL,
+        prize_name: 'Premios Sorpresa'
+      });
+      trackStandardEvent('Contact', {
+        content_name: 'JokerGol Register Click',
+        prize_name: 'Premios Sorpresa'
+      });
+    });
+
+    spinBtn.dataset.mode = 'spin';
+
+    buildReel();
+    buildReel();
+    buildReel();
+    formatTime(CONFIG.COUNTDOWN_SECONDS);
+    setStatus(remainingText(), false);
+  </script>
+</body>
+</html>
