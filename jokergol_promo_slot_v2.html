@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JokerGol | Jugá y descubrí tu premio</title>
+  <meta name="description" content="Jugá en JokerGol y descubrí si desbloqueaste un premio sorpresa. Si ganás 20 Free Spins, registrate y solicitá su activación por WhatsApp o soporte." />
+  <style>
+    :root {
+      --bg-1: #090f1c;
+      --bg-2: #111827;
+      --bg-3: #0f172a;
+      --card: rgba(15, 23, 42, 0.8);
+      --gold: #facc15;
+      --gold-2: #fde68a;
+      --green: #22c55e;
+      --green-2: #bbf7d0;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --line: rgba(255,255,255,0.12);
+      --shadow: 0 22px 60px rgba(0,0,0,.38);
+      --radius: 26px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(250, 204, 21, 0.15), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.11), transparent 22%),
+        linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 42%, var(--bg-3) 100%);
+      min-height: 100vh;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 24px 0 42px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 28px rgba(0,0,0,.18);
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--gold), #f59e0b);
+      color: #111827;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      font-weight: 800;
+      box-shadow: 0 12px 26px rgba(250, 204, 21, .24);
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 18px;
+      letter-spacing: .02em;
+    }
+
+    .brand-copy span {
+      display: block;
+      font-size: 12px;
+      color: var(--gold-2);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      margin-top: 2px;
+    }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: 1.04fr .96fr;
+      gap: 28px;
+      align-items: center;
+      padding-top: 28px;
+    }
+
+    .eyebrow {
+      color: var(--gold-2);
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 6vw, 62px);
+      line-height: .96;
+      margin: 0 0 14px;
+      text-wrap: balance;
+    }
+
+    .lead {
+      font-size: clamp(17px, 2vw, 20px);
+      color: var(--muted);
+      line-height: 1.58;
+      max-width: 680px;
+      margin: 0 0 24px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: #e2e8f0;
+      font-size: 14px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 16px;
+      padding: 15px 22px;
+      font-size: 16px;
+      font-weight: 700;
+      transition: .2s transform ease, .2s opacity ease, .2s box-shadow ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), #f59e0b);
+      color: #111827;
+      box-shadow: 0 14px 28px rgba(245, 158, 11, .24);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .game-shell {
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 30px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-shell::before {
+      content: "";
+      position: absolute;
+      inset: -38% auto auto -18%;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(250,204,21,.22), transparent 70%);
+      pointer-events: none;
+    }
+
+    .slot-card {
+      position: relative;
+      z-index: 1;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 26px;
+      padding: 22px;
+      backdrop-filter: blur(12px);
+    }
+
+    .slot-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .slot-head h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .slot-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .promo-pill {
+      font-size: 13px;
+      color: #111827;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fef08a, #facc15);
+      padding: 8px 12px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .slot-frame {
+      position: relative;
+      padding: 18px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #1f2937 0%, #111827 100%);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+      overflow: hidden;
+    }
+
+    .slot-frame::before,
+    .slot-frame::after {
+      content: "";
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      height: 72px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .slot-frame::before {
+      top: 18px;
+      background: linear-gradient(180deg, rgba(17,24,39,.95), rgba(17,24,39,0));
+    }
+
+    .slot-frame::after {
+      bottom: 18px;
+      background: linear-gradient(180deg, rgba(17,24,39,0), rgba(17,24,39,.95));
+    }
+
+    .win-line {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 82px;
+      border-radius: 18px;
+      border: 2px solid rgba(250, 204, 21, .34);
+      background: rgba(250, 204, 21, .08);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.04) inset;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .reels {
+      position: relative;
+      z-index: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .reel {
+      position: relative;
+      height: 246px;
+      overflow: hidden;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: inset 0 8px 18px rgba(255,255,255,.04), inset 0 -12px 22px rgba(0,0,0,.18);
+    }
+
+    .reel-track {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      transition: transform .2s ease-out;
+    }
+
+    .symbol {
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(34px, 5vw, 48px);
+      text-shadow: 0 4px 14px rgba(0,0,0,.22);
+      user-select: none;
+    }
+
+    .status {
+      min-height: 56px;
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-top: 16px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.06);
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 700;
+      line-height: 1.38;
+    }
+
+    .status.win {
+      background: rgba(250, 204, 21, .12);
+      border-color: rgba(250, 204, 21, .32);
+      color: #fef3c7;
+    }
+
+    .spin-meta {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 16px 0 0;
+    }
+
+    .spin-note {
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+
+    .result-panel {
+      margin-top: 18px;
+      display: none;
+      gap: 16px;
+      flex-direction: column;
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(34,197,94,.12), rgba(34,197,94,.05));
+      border: 1px solid rgba(34,197,94,.26);
+    }
+
+    .result-panel.show { display: flex; }
+
+    .win-title {
+      font-size: clamp(24px, 4vw, 34px);
+      font-weight: 800;
+      margin: 0;
+      text-align: center;
+    }
+
+    .win-copy {
+      margin: 0;
+      color: #dcfce7;
+      text-align: center;
+      line-height: 1.65;
+    }
+
+    .timer-boxes {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .time-box {
+      min-width: 88px;
+      border-radius: 18px;
+      padding: 14px 12px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
+      text-align: center;
+    }
+
+    .time-num {
+      display: block;
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .time-label {
+      display: block;
+      margin-top: 6px;
+      color: #d1fae5;
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .help-note {
+      text-align: center;
+      font-size: 14px;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+
+    .support-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .support-actions .btn { width: 100%; }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 26px 0 34px;
+      background: rgba(0,0,0,.18);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .footer-note {
+      font-size: 14px;
+      color: #cbd5e1;
+      line-height: 1.6;
+      max-width: 920px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .footer-links a,
+    .footer-links span {
+      color: var(--gold-2);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .footer-links span {
+      text-decoration: none;
+      color: #e5e7eb;
+    }
+
+    @media (max-width: 940px) {
+      .top-grid,
+      .support-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .support-actions {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .slot-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .wrap { width: min(100% - 22px, 1120px); }
+      .hero { padding-top: 16px; }
+      .slot-card, .game-shell { padding: 14px; }
+      .timer-boxes { gap: 8px; }
+      .time-box { min-width: 78px; }
+      .btn { width: 100%; }
+      .cta-row { flex-direction: column; align-items: stretch; }
+      .lead { font-size: 16px; }
+      .reel { height: 228px; }
+      .symbol { height: 76px; }
+      .win-line { height: 76px; }
+    }
+  </style>
+
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', 'YOUR_PIXEL_ID');
+    fbq('track', 'PageView');
+    fbq('track', 'ViewContent', {
+      content_name: 'JokerGol Spin Promo',
+      content_category: 'Landing Promo',
+      promo_name: '20 Free Spins'
+    });
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1" />
+  </noscript>
+</head>
+<body>
+  <main class="hero">
+    <div class="wrap">
+      <div class="brand" aria-label="JokerGol">
+        <div class="brand-logo" aria-hidden="true">J</div>
+        <div class="brand-copy">
+          <strong>JokerGol</strong>
+          <span>Premio sorpresa</span>
+        </div>
+      </div>
+
+      <section class="top-grid">
+        <div>
+          <div class="eyebrow">Promoción exclusiva</div>
+          <h1>Jugá y descubrí si desbloqueaste <span style="color: var(--gold);">20 Free Spins</span></h1>
+          <p class="lead">
+            Probá tu suerte en JokerGol. Si aparece la combinación ganadora, se habilitará tu premio y podrás completar el registro para luego solicitar la activación de tus 20 Free Spins por WhatsApp o por el chat de soporte.
+          </p>
+
+          <div class="chips">
+            <span class="chip">Slot visual 3x3</span>
+            <span class="chip">Premio sorpresa</span>
+            <span class="chip">Registro en JokerGol</span>
+          </div>
+
+          <div class="cta-row">
+            <button class="btn btn-primary" id="startSpinBtn">Jugar ahora</button>
+            <a href="#promoSlot" class="btn btn-secondary">Ir al juego</a>
+          </div>
+        </div>
+
+        <div class="game-shell" id="promoSlot">
+          <div class="slot-card">
+            <div class="slot-head">
+              <div>
+                <h2>Probá tu suerte</h2>
+                <p>Girá los rodillos y descubrí si se activa el premio sorpresa.</p>
+              </div>
+              <div class="promo-pill">Posible premio: 20 Free Spins</div>
+            </div>
+
+            <div class="slot-frame" aria-live="polite">
+              <div class="win-line"></div>
+              <div class="reels" id="reels"></div>
+              <div class="status" id="statusBox">
+                Tocá “Girar ahora” y mirá si los símbolos se alinean en la fila central.
+              </div>
+            </div>
+
+            <div class="spin-meta">
+              <button class="btn btn-primary" id="spinBtn">Girar ahora</button>
+            </div>
+
+            <div class="spin-note">
+              Si ganás, se mostrará automáticamente la pantalla para completar tu registro y reclamar tu beneficio.
+            </div>
+
+            <div class="result-panel" id="resultPanel">
+              <h2 class="win-title">¡Ganaste 20 Free Spins!</h2>
+              <p class="win-copy">
+                Completá ahora tu registro en JokerGol. Una vez registrado, solicitá la activación de tus 20 Free Spins por WhatsApp o por el chat de soporte del sitio.
+              </p>
+
+              <div class="timer-boxes" aria-label="Tiempo restante de la promo">
+                <div class="time-box">
+                  <span class="time-num" id="minutes">02</span>
+                  <span class="time-label">Min</span>
+                </div>
+                <div class="time-box">
+                  <span class="time-num" id="seconds">00</span>
+                  <span class="time-label">Seg</span>
+                </div>
+              </div>
+
+              <div class="help-note">
+                Paso 1: registrate en JokerGol. Paso 2: pedí tus 20 Free Spins por WhatsApp o por soporte.
+              </div>
+
+              <div class="support-actions">
+                <a class="btn btn-primary" id="registerBtn" href="#" target="_blank" rel="noopener noreferrer">Completar registro</a>
+                <a class="btn btn-secondary" id="whatsappBtn" href="#" target="_blank" rel="noopener noreferrer">Solicitar por WhatsApp</a>
+                <a class="btn btn-secondary" id="supportBtn" href="#" target="_blank" rel="noopener noreferrer">Ir al soporte</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-note">
+        Exclusivo para mayores de 18 años. Promoción sujeta a términos y condiciones vigentes y aplicable a nuevos usuarios según la configuración comercial de JokerGol.
+      </div>
+      <div class="footer-links">
+        <span>+18</span>
+        <a href="https://jokergol.com/antispam" target="_blank" rel="noopener noreferrer">Política Anti Spam</a>
+        <a href="https://jokergol.com/responsible-gaming" target="_blank" rel="noopener noreferrer">Juego responsable</a>
+        <a href="https://jokergol.com/terms" target="_blank" rel="noopener noreferrer">Términos y condiciones</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const CONFIG = {
+      REGISTER_URL: 'https://www.jokergol.com/live',
+      WHATSAPP_URL: 'https://wa.me/56900000000?text=Hola%2C%20ya%20me%20registr%C3%A9%20en%20JokerGol%20y%20quiero%20solicitar%20mis%2020%20Free%20Spins.',
+      SUPPORT_CHAT_URL: 'https://www.jokergol.com/',
+      COUNTDOWN_SECONDS: 120,
+      WIN_CHANCE: 0.22,
+      SPIN_MS: 1400,
+      REEL_STOPS: [850, 1100, 1350],
+      SYMBOLS: ['🎰', '🃏', '⭐', '🍀', '7️⃣', '💎', '🔥', '👑']
+    };
+
+    const reelsContainer = document.getElementById('reels');
+    const statusBox = document.getElementById('statusBox');
+    const spinBtn = document.getElementById('spinBtn');
+    const startSpinBtn = document.getElementById('startSpinBtn');
+    const resultPanel = document.getElementById('resultPanel');
+    const registerBtn = document.getElementById('registerBtn');
+    const whatsappBtn = document.getElementById('whatsappBtn');
+    const supportBtn = document.getElementById('supportBtn');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+
+    const reelEls = [];
+    let isSpinning = false;
+    let countdownInterval = null;
+    let countdown = CONFIG.COUNTDOWN_SECONDS;
+
+    registerBtn.href = CONFIG.REGISTER_URL;
+    whatsappBtn.href = CONFIG.WHATSAPP_URL;
+    supportBtn.href = CONFIG.SUPPORT_CHAT_URL;
+
+    function trackEvent(name, params = {}) {
+      if (typeof fbq === 'function') {
+        fbq('trackCustom', name, params);
+      }
+    }
+
+    function trackStandardEvent(name, params = {}) {
+      if (typeof fbq === 'function') {
+        fbq('track', name, params);
+      }
+    }
+
+    function scrollToGame() {
+      document.getElementById('promoSlot').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function randomSymbol() {
+      return CONFIG.SYMBOLS[Math.floor(Math.random() * CONFIG.SYMBOLS.length)];
+    }
+
+    function buildReel() {
+      const reel = document.createElement('div');
+      reel.className = 'reel';
+
+      const track = document.createElement('div');
+      track.className = 'reel-track';
+      reel.appendChild(track);
+
+      for (let i = 0; i < 18; i++) {
+        const symbol = document.createElement('div');
+        symbol.className = 'symbol';
+        symbol.textContent = randomSymbol();
+        track.appendChild(symbol);
+      }
+
+      reelsContainer.appendChild(reel);
+      reelEls.push({ reel, track });
+    }
+
+    function setStatus(message, isWin = false) {
+      statusBox.textContent = message;
+      statusBox.classList.toggle('win', isWin);
+    }
+
+    function formatTime(totalSeconds) {
+      const mins = Math.floor(totalSeconds / 60);
+      const secs = totalSeconds % 60;
+      minutesEl.textContent = String(mins).padStart(2, '0');
+      secondsEl.textContent = String(secs).padStart(2, '0');
+    }
+
+    function startCountdown() {
+      clearInterval(countdownInterval);
+      countdown = CONFIG.COUNTDOWN_SECONDS;
+      formatTime(countdown);
+
+      trackEvent('CountdownStarted', {
+        countdown_seconds: CONFIG.COUNTDOWN_SECONDS,
+        promo_name: '20 Free Spins'
+      });
+
+      countdownInterval = setInterval(() => {
+        countdown -= 1;
+        if (countdown <= 0) {
+          clearInterval(countdownInterval);
+          countdown = 0;
+          formatTime(countdown);
+          setStatus('El tiempo del beneficio terminó. Si seguís interesado, podés intentar nuevamente.', false);
+          spinBtn.disabled = false;
+          return;
+        }
+        formatTime(countdown);
+      }, 1000);
+    }
+
+    function updateTrackSymbols(track, centerSymbol = null) {
+      track.innerHTML = '';
+      const sequence = [];
+
+      for (let i = 0; i < 15; i++) {
+        sequence.push(randomSymbol());
+      }
+
+      const finalThree = [randomSymbol(), centerSymbol || randomSymbol(), randomSymbol()];
+      sequence.push(...finalThree);
+
+      sequence.forEach((char) => {
+        const symbol = document.createElement('div');
+        symbol.className = 'symbol';
+        symbol.textContent = char;
+        track.appendChild(symbol);
+      });
+    }
+
+    function animateSpin(isWinner) {
+      const winSymbol = '🎰';
+      const centerSymbols = isWinner
+        ? [winSymbol, winSymbol, winSymbol]
+        : [randomSymbol(), randomSymbol(), randomSymbol()];
+
+      if (!isWinner && centerSymbols[0] === centerSymbols[1] && centerSymbols[1] === centerSymbols[2]) {
+        centerSymbols[2] = centerSymbols[2] === '⭐' ? '🃏' : '⭐';
+      }
+
+      reelEls.forEach(({ track }, index) => {
+        updateTrackSymbols(track, centerSymbols[index]);
+        track.style.transition = 'none';
+        track.style.transform = 'translateY(0px)';
+        track.offsetHeight;
+
+        setTimeout(() => {
+          track.style.transition = `transform ${CONFIG.REEL_STOPS[index]}ms cubic-bezier(.17,.67,.22,1)`;
+          track.style.transform = 'translateY(-1230px)';
+        }, 40 + index * 60);
+      });
+
+      return centerSymbols;
+    }
+
+    function revealWin() {
+      resultPanel.classList.add('show');
+      setStatus('¡Combinación ganadora! Registrate ahora y pedí tus 20 Free Spins por WhatsApp o soporte.', true);
+      startCountdown();
+      spinBtn.disabled = true;
+
+      trackEvent('PrizeUnlocked', {
+        prize_name: '20 Free Spins',
+        promo_name: '20 Free Spins'
+      });
+
+      trackStandardEvent('Lead', {
+        content_name: 'Prize Unlocked',
+        prize_name: '20 Free Spins'
+      });
+    }
+
+    function handleSpin() {
+      if (isSpinning || resultPanel.classList.contains('show')) return;
+
+      isSpinning = true;
+      setStatus('Girando rodillos...', false);
+      scrollToGame();
+
+      trackEvent('SpinAttempt', {
+        promo_name: '20 Free Spins'
+      });
+
+      const isWinner = Math.random() < CONFIG.WIN_CHANCE;
+      const finalSymbols = animateSpin(isWinner);
+
+      setTimeout(() => {
+        if (isWinner) {
+          revealWin();
+        } else {
+          setStatus(`No salió esta vez. En la fila central aparecieron ${finalSymbols.join(' ')}. Probá otra vez.`, false);
+        }
+        isSpinning = false;
+      }, CONFIG.SPIN_MS);
+    }
+
+    spinBtn.addEventListener('click', handleSpin);
+    startSpinBtn.addEventListener('click', handleSpin);
+
+    registerBtn.addEventListener('click', () => {
+      trackEvent('OutboundRegisterClick', {
+        destination: CONFIG.REGISTER_URL,
+        prize_name: '20 Free Spins'
+      });
+      trackStandardEvent('Contact', {
+        content_name: 'JokerGol Register Click',
+        prize_name: '20 Free Spins'
+      });
+    });
+
+    whatsappBtn.addEventListener('click', () => {
+      trackStandardEvent('Contact', {
+        content_name: 'WhatsApp Free Spins Request',
+        method: 'whatsapp',
+        prize_name: '20 Free Spins'
+      });
+    });
+
+    supportBtn.addEventListener('click', () => {
+      trackStandardEvent('Contact', {
+        content_name: 'Support Chat Free Spins Request',
+        method: 'support_chat',
+        prize_name: '20 Free Spins'
+      });
+    });
+
+    buildReel();
+    buildReel();
+    buildReel();
+    formatTime(CONFIG.COUNTDOWN_SECONDS);
+  </script>
+</body>
+</html>
