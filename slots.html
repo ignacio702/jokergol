@@ -77,7 +77,11 @@
       overflow: hidden;
       flex: 0 0 auto;
     }
-
+    .brand-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
     .brand-copy strong {
       display: block;
       font-size: 19px;
@@ -173,11 +177,47 @@
     }
 
     .slot-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 136px;
+      align-items: start;
       gap: 12px;
       margin-bottom: 12px;
+    }
+    
+    .slot-head-main {
+      min-width: 0;
+    }
+    
+    .slot-head-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    
+    .slot-mascot {
+      width: 136px;
+      align-self: stretch;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      border-radius: 18px;
+      padding: 6px 6px 0;
+      background:
+        radial-gradient(circle at top, rgba(250,204,21,.22), transparent 62%),
+        linear-gradient(180deg, rgba(10,23,56,.82), rgba(8,18,42,.18));
+      border: 1px solid rgba(255,255,255,.06);
+      overflow: hidden;
+      min-height: 118px;
+    }
+    
+    .slot-mascot img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.32));
     }
 
     .slot-head h2 {
@@ -491,25 +531,37 @@
       text-decoration: none !important;
       box-shadow: 0 10px 20px rgba(0,0,0,.18);
     }
-
+    
     @media (max-width: 940px) {
       .top-grid { grid-template-columns: 1fr; }
-      .slot-head { flex-direction: column; align-items: flex-start; }
+    
+      .slot-head {
+        grid-template-columns: 1fr 118px;
+        align-items: stretch;
+      }
+    
+      .slot-mascot {
+        min-height: 106px;
+        width: 118px;
+      }
     }
-
+    
     @media (max-width: 620px) {
-      .wrap { width: min(100% - 16px, 1120px); }
-      .hero { padding-top: 12px; padding-bottom: 18px; }
-      .slot-card, .game-shell { padding: 12px; }
-      .timer-boxes { gap: 8px; }
-      .time-box { min-width: 78px; }
-      .lead { font-size: 16px; }
-      .top-grid { gap: 14px; padding-top: 12px; }
-      .reel { height: 186px; }
-      .win-line { height: calc((186px - 24px - 16px) / 3); }
-      .slot-head { margin-bottom: 10px; }
-      .slot-frame { padding: 12px; }
-      .reels-wrap::before, .reels-wrap::after { height: 42px; }
+      .slot-head {
+        grid-template-columns: 1fr 104px;
+        gap: 10px;
+      }
+    
+      .slot-head-top {
+        gap: 8px;
+        margin-bottom: 6px;
+      }
+    
+      .slot-mascot {
+        width: 104px;
+        min-height: 98px;
+        padding: 4px 4px 0;
+      }
     }
   </style>
 
@@ -540,14 +592,8 @@
     <div class="wrap">
       <div class="brand" aria-label="JokerGol">
         <div class="brand-main">
-          <div class="brand-logo" aria-hidden="true">
-            <svg width="34" height="34" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
-              <rect x="10" y="8" width="44" height="48" rx="10" fill="#0f172a"/>
-              <path d="M32 18C28.7 18 26 20.7 26 24C26 26.8 27.9 29.1 30.4 29.8V35.5H25.5C23.6 35.5 22 37.1 22 39C22 40.9 23.6 42.5 25.5 42.5H38.5C40.4 42.5 42 40.9 42 39C42 37.1 40.4 35.5 38.5 35.5H33.6V29.8C36.1 29.1 38 26.8 38 24C38 20.7 35.3 18 32 18Z" fill="#FACC15"/>
-              <circle cx="24" cy="22" r="2" fill="#FACC15"/>
-              <circle cx="40" cy="22" r="2" fill="#FACC15"/>
-              <path d="M24 48H40" stroke="#FACC15" stroke-width="4" stroke-linecap="round"/>
-            </svg>
+          <div class="brand-logo">
+             <img src="https://jokergol.com/logo.png" alt="JokerGol logo" />
           </div>
           <div class="brand-copy">
             <strong>JokerGol</strong>
@@ -573,13 +619,21 @@
 
         <div class="game-shell" id="promoSlot">
           <div class="slot-card">
-            <div class="slot-head">
-              <div>
-                <h2>Prueba tu suerte</h2>
-                <p>Activa tus premios sorpresa.</p>
+          <div class="slot-head">
+            <div class="slot-head-main">
+              <div class="slot-head-top">
+                <div>
+                  <h2>Prueba tu suerte</h2>
+                  <p>Activa tus premios sorpresa.</p>
+                </div>
+                <div class="promo-pill">Premios sorpresa</div>
               </div>
-              <div class="promo-pill">Premios sorpresa</div>
             </div>
+          
+            <div class="slot-mascot" aria-hidden="true">
+              <img src="Jokers-sin-fondo.png" alt="" />
+            </div>
+          </div>
 
             <div class="slot-frame" aria-live="polite">
               <div class="reels-wrap">
