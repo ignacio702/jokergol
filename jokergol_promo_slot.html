@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JokerGol | Girá y ganá 20 Free Spins</title>
+  <meta name="description" content="Probá tu suerte en JokerGol. Tenés 3 intentos para desbloquear 20 Free Spins y registrarte antes de que caduque la promo." />
+  <style>
+    :root {
+      --bg-1: #0f172a;
+      --bg-2: #1e293b;
+      --card: rgba(15, 23, 42, 0.78);
+      --gold: #facc15;
+      --gold-2: #fde68a;
+      --accent: #22c55e;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --line: rgba(255,255,255,0.12);
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(250, 204, 21, 0.18), transparent 30%),
+        linear-gradient(180deg, #0b1220 0%, #111827 38%, #0f172a 100%);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 26px 0 18px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--gold), #f59e0b);
+      color: #111827;
+      font-weight: 800;
+      box-shadow: 0 8px 25px rgba(250, 204, 21, .3);
+    }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 26px;
+      align-items: center;
+      padding: 28px 0 30px;
+    }
+
+    .eyebrow {
+      color: var(--gold-2);
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 6vw, 62px);
+      line-height: .96;
+      margin: 0 0 14px;
+      text-wrap: balance;
+    }
+
+    .lead {
+      font-size: clamp(17px, 2vw, 20px);
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 680px;
+      margin: 0 0 24px;
+    }
+
+    .bullets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: #e2e8f0;
+      font-size: 14px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 14px;
+      padding: 15px 22px;
+      font-size: 16px;
+      font-weight: 700;
+      transition: .2s transform ease, .2s opacity ease, .2s box-shadow ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), #f59e0b);
+      color: #111827;
+      box-shadow: 0 14px 28px rgba(245, 158, 11, .24);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .game-shell {
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 30px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-shell::before {
+      content: "";
+      position: absolute;
+      inset: -40% auto auto -25%;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(250,204,21,.22), transparent 70%);
+      pointer-events: none;
+    }
+
+    .slot-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 26px;
+      padding: 22px;
+      backdrop-filter: blur(12px);
+    }
+
+    .slot-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .attempts {
+      font-size: 15px;
+      color: var(--gold-2);
+      font-weight: 700;
+    }
+
+    .promo-pill {
+      font-size: 13px;
+      color: #111827;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fef08a, #facc15);
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+
+    .slot-frame {
+      background: linear-gradient(180deg, #1f2937 0%, #111827 100%);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+    }
+
+    .reels {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .reel {
+      height: 120px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+      border: 1px solid rgba(255,255,255,.08);
+      font-size: clamp(42px, 7vw, 58px);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      box-shadow: inset 0 8px 18px rgba(255,255,255,.04), inset 0 -12px 22px rgba(0,0,0,.18);
+    }
+
+    .reel.spinning {
+      animation: pulse .15s linear infinite alternate;
+    }
+
+    .reel.win {
+      border-color: rgba(250, 204, 21, .65);
+      box-shadow: 0 0 0 2px rgba(250, 204, 21, .18), 0 10px 28px rgba(250, 204, 21, .18);
+      transform: translateY(-2px);
+    }
+
+    @keyframes pulse {
+      from { transform: translateY(0) scale(1); }
+      to { transform: translateY(-2px) scale(1.01); }
+    }
+
+    .status {
+      min-height: 56px;
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.06);
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .status.win {
+      background: rgba(250, 204, 21, .12);
+      border-color: rgba(250, 204, 21, .32);
+      color: #fef3c7;
+    }
+
+    .result-panel {
+      margin-top: 16px;
+      display: none;
+      gap: 16px;
+      flex-direction: column;
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(34,197,94,.1), rgba(34,197,94,.04));
+      border: 1px solid rgba(34,197,94,.26);
+    }
+
+    .result-panel.show { display: flex; }
+
+    .win-title {
+      font-size: clamp(24px, 4vw, 34px);
+      font-weight: 800;
+      margin: 0;
+      text-align: center;
+    }
+
+    .win-copy {
+      margin: 0;
+      color: #dcfce7;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .timer-boxes {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .time-box {
+      min-width: 88px;
+      border-radius: 18px;
+      padding: 14px 12px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
+      text-align: center;
+    }
+
+    .time-num {
+      display: block;
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .time-label {
+      display: block;
+      margin-top: 6px;
+      color: #d1fae5;
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .help-note {
+      text-align: center;
+      font-size: 14px;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+
+    .support-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .support-actions .btn { width: 100%; }
+
+    .how-it-works {
+      padding: 10px 0 46px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .info-card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .info-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .info-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 26px 0 34px;
+      background: rgba(0,0,0,.18);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-note {
+      font-size: 14px;
+      color: #cbd5e1;
+      line-height: 1.6;
+      max-width: 920px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .footer-links a {
+      color: var(--gold-2);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    @media (max-width: 920px) {
+      .top-grid,
+      .grid-3,
+      .support-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .support-actions {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .slot-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .reel { height: 104px; }
+    }
+
+    @media (max-width: 620px) {
+      .wrap { width: min(100% - 22px, 1120px); }
+      .hero { padding-top: 16px; }
+      .slot-card, .game-shell { padding: 14px; }
+      .timer-boxes { gap: 8px; }
+      .time-box { min-width: 78px; }
+      .btn { width: 100%; }
+      .cta-row { flex-direction: column; align-items: stretch; }
+      .lead { font-size: 16px; }
+    }
+  </style>
+
+  <!-- Meta Pixel base code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', 'YOUR_PIXEL_ID');
+    fbq('track', 'PageView');
+    fbq('track', 'ViewContent', {
+      content_name: 'JokerGol Promo 20 Free Spins',
+      content_category: 'Landing Promo',
+      promo_name: '20 Free Spins'
+    });
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1" />
+  </noscript>
+</head>
+<body>
+  <main class="hero">
+    <div class="wrap">
+      <div class="brand" aria-label="JokerGol">
+        <div class="brand-mark">J</div>
+        <div><strong>JokerGol</strong> · Promo 20 Free Spins</div>
+      </div>
+
+      <section class="top-grid">
+        <div>
+          <div class="eyebrow">Promo exclusiva para nuevos usuarios</div>
+          <h1>Girá 3 veces y desbloqueá <span style="color: var(--gold);">20 Free Spins</span></h1>
+          <p class="lead">
+            Probá tu suerte. Si desbloqueás el premio, registrate antes de que caduque la cuenta regresiva y luego solicitá tus 20 Free Spins por WhatsApp o por el chat de soporte del sitio.
+          </p>
+
+          <div class="bullets">
+            <span class="chip">3 intentos</span>
+            <span class="chip">Cuenta regresiva real</span>
+            <span class="chip">Registro en JokerGol</span>
+          </div>
+
+          <div class="cta-row">
+            <button class="btn btn-primary" id="startSpinBtn">Probar ahora</button>
+            <a href="#promoSlot" class="btn btn-secondary">Ver promoción</a>
+          </div>
+        </div>
+
+        <div class="game-shell" id="promoSlot">
+          <div class="slot-card">
+            <div class="slot-top">
+              <div class="attempts">Intentos: <span id="attemptsValue">0</span>/3</div>
+              <div class="promo-pill">Premio: 20 Free Spins</div>
+            </div>
+
+            <div class="slot-frame" aria-live="polite">
+              <div class="reels">
+                <div class="reel" id="reel1">🎰</div>
+                <div class="reel" id="reel2">🃏</div>
+                <div class="reel" id="reel3">⭐</div>
+              </div>
+
+              <div class="status" id="statusBox">
+                Tenés 3 oportunidades. Tocá el botón y descubrí si desbloqueaste tus 20 Free Spins.
+              </div>
+            </div>
+
+            <div class="cta-row" style="margin-top:16px;">
+              <button class="btn btn-primary" id="spinBtn">Girar ahora</button>
+              <button class="btn btn-secondary" id="resetBtn" type="button">Reiniciar demo</button>
+            </div>
+
+            <div class="result-panel" id="resultPanel">
+              <h2 class="win-title">¡Ganaste 20 Free Spins!</h2>
+              <p class="win-copy">
+                Registrate ahora en JokerGol antes de que el beneficio caduque. Una vez registrado, solicitá la activación de tus Free Spins por WhatsApp o por el chat de soporte del sitio.
+              </p>
+
+              <div class="timer-boxes" aria-label="Cuenta regresiva de la promo">
+                <div class="time-box">
+                  <span class="time-num" id="minutes">02</span>
+                  <span class="time-label">Min</span>
+                </div>
+                <div class="time-box">
+                  <span class="time-num" id="seconds">00</span>
+                  <span class="time-label">Seg</span>
+                </div>
+              </div>
+
+              <div class="help-note">
+                Paso 1: registrate en JokerGol. Paso 2: pedí tus 20 Free Spins en WhatsApp o en el chat de soporte.
+              </div>
+
+              <div class="support-actions">
+                <a class="btn btn-primary" id="registerBtn" href="#" target="_blank" rel="noopener noreferrer">Registrarme ahora</a>
+                <a class="btn btn-secondary" id="whatsappBtn" href="#" target="_blank" rel="noopener noreferrer">Solicitar por WhatsApp</a>
+                <a class="btn btn-secondary" id="supportBtn" href="#" target="_blank" rel="noopener noreferrer">Ir al chat de soporte</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <section class="how-it-works">
+    <div class="wrap">
+      <div class="grid-3">
+        <article class="info-card">
+          <h3>1. Girá</h3>
+          <p>El usuario juega una dinámica simple de 3 intentos con una experiencia visual liviana y clara para mobile.</p>
+        </article>
+        <article class="info-card">
+          <h3>2. Desbloqueá el premio</h3>
+          <p>En el tercer intento se muestra el premio de 20 Free Spins y se activa una cuenta regresiva para acelerar la acción.</p>
+        </article>
+        <article class="info-card">
+          <h3>3. Registrate y reclamá</h3>
+          <p>El CTA lleva directo al registro de JokerGol. Después, el usuario reclama sus Free Spins por WhatsApp o soporte.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-note">
+        Exclusivo para mayores de 18 años. Promoción sujeta a términos y condiciones vigentes y aplicable a nuevos usuarios según la configuración comercial de JokerGol.
+      </div>
+      <div class="footer-links">
+        <span>+18</span>
+        <a href="https://jokergol.com/antispam" target="_blank" rel="noopener noreferrer">Política Anti Spam</a>
+        <a href="https://jokergol.com/responsible-gaming" target="_blank" rel="noopener noreferrer">Juego responsable</a>
+        <a href="https://jokergol.com/terms" target="_blank" rel="noopener noreferrer">Términos y condiciones</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const CONFIG = {
+      REGISTER_URL: 'https://jokergol.com/register',
+      WHATSAPP_URL: 'https://wa.me/56900000000?text=Hola%2C%20ya%20me%20registr%C3%A9%20en%20JokerGol%20y%20quiero%20solicitar%20mis%2020%20Free%20Spins.',
+      SUPPORT_CHAT_URL: 'https://jokergol.com/',
+      COUNTDOWN_SECONDS: 120,
+      SPIN_DELAY_MS: 1100,
+      SYMBOLS: ['🎰', '🃏', '⭐', '🍀', '7️⃣', '💎']
+    };
+
+    const reels = [
+      document.getElementById('reel1'),
+      document.getElementById('reel2'),
+      document.getElementById('reel3')
+    ];
+    const attemptsValue = document.getElementById('attemptsValue');
+    const spinBtn = document.getElementById('spinBtn');
+    const startSpinBtn = document.getElementById('startSpinBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const statusBox = document.getElementById('statusBox');
+    const resultPanel = document.getElementById('resultPanel');
+    const registerBtn = document.getElementById('registerBtn');
+    const whatsappBtn = document.getElementById('whatsappBtn');
+    const supportBtn = document.getElementById('supportBtn');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+
+    let attempts = 0;
+    let isSpinning = false;
+    let countdown = CONFIG.COUNTDOWN_SECONDS;
+    let countdownInterval = null;
+
+    registerBtn.href = CONFIG.REGISTER_URL;
+    whatsappBtn.href = CONFIG.WHATSAPP_URL;
+    supportBtn.href = CONFIG.SUPPORT_CHAT_URL;
+
+    function trackEvent(name, params = {}) {
+      if (typeof fbq === 'function') {
+        fbq('trackCustom', name, params);
+      }
+    }
+
+    function trackStandardEvent(name, params = {}) {
+      if (typeof fbq === 'function') {
+        fbq('track', name, params);
+      }
+    }
+
+    function scrollToGame() {
+      document.getElementById('promoSlot').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function randomSymbol() {
+      return CONFIG.SYMBOLS[Math.floor(Math.random() * CONFIG.SYMBOLS.length)];
+    }
+
+    function animateReels(finalSymbols, onDone) {
+      reels.forEach((reel) => {
+        reel.classList.remove('win');
+        reel.classList.add('spinning');
+      });
+
+      const ticker = setInterval(() => {
+        reels.forEach((reel) => { reel.textContent = randomSymbol(); });
+      }, 90);
+
+      setTimeout(() => {
+        clearInterval(ticker);
+        reels.forEach((reel, idx) => {
+          reel.textContent = finalSymbols[idx];
+          reel.classList.remove('spinning');
+        });
+        onDone();
+      }, CONFIG.SPIN_DELAY_MS);
+    }
+
+    function setStatus(message, isWin = false) {
+      statusBox.textContent = message;
+      statusBox.classList.toggle('win', isWin);
+    }
+
+    function updateAttempts() {
+      attemptsValue.textContent = String(attempts);
+    }
+
+    function formatTime(totalSeconds) {
+      const mins = Math.floor(totalSeconds / 60);
+      const secs = totalSeconds % 60;
+      minutesEl.textContent = String(mins).padStart(2, '0');
+      secondsEl.textContent = String(secs).padStart(2, '0');
+    }
+
+    function startCountdown() {
+      clearInterval(countdownInterval);
+      countdown = CONFIG.COUNTDOWN_SECONDS;
+      formatTime(countdown);
+
+      trackEvent('CountdownStarted', {
+        countdown_seconds: CONFIG.COUNTDOWN_SECONDS,
+        promo_name: '20 Free Spins'
+      });
+
+      countdownInterval = setInterval(() => {
+        countdown -= 1;
+        if (countdown <= 0) {
+          clearInterval(countdownInterval);
+          countdown = 0;
+          formatTime(countdown);
+          setStatus('La demo venció. Podés reiniciarla para volver a probar la experiencia.', false);
+          return;
+        }
+        formatTime(countdown);
+      }, 1000);
+    }
+
+    function revealWin() {
+      reels.forEach((reel) => reel.classList.add('win'));
+      setStatus('¡Desbloqueaste 20 Free Spins! Registrate ahora y reclamalos por WhatsApp o soporte.', true);
+      resultPanel.classList.add('show');
+      startCountdown();
+
+      trackEvent('PrizeUnlocked', {
+        prize_name: '20 Free Spins',
+        attempts_used: attempts,
+        promo_name: '20 Free Spins'
+      });
+    }
+
+    function handleSpin() {
+      if (isSpinning || attempts >= 3) return;
+
+      if (attempts === 0) {
+        scrollToGame();
+      }
+
+      isSpinning = true;
+      attempts += 1;
+      updateAttempts();
+
+      trackEvent('SpinAttempt', {
+        attempt_number: attempts,
+        promo_name: '20 Free Spins'
+      });
+
+      const losingResults = [
+        ['🍀', '⭐', '🃏'],
+        ['7️⃣', '💎', '⭐']
+      ];
+      const winningResult = ['🎰', '🎰', '🎰'];
+
+      if (attempts < 3) {
+        animateReels(losingResults[attempts - 1], () => {
+          const remaining = 3 - attempts;
+          setStatus(`No fue esta vez. Te queda${remaining === 1 ? '' : 'n'} ${remaining} intento${remaining === 1 ? '' : 's'}.`);
+          isSpinning = false;
+        });
+      } else {
+        animateReels(winningResult, () => {
+          revealWin();
+          isSpinning = false;
+          spinBtn.disabled = true;
+        });
+      }
+    }
+
+    function resetDemo() {
+      attempts = 0;
+      isSpinning = false;
+      updateAttempts();
+      clearInterval(countdownInterval);
+      formatTime(CONFIG.COUNTDOWN_SECONDS);
+      resultPanel.classList.remove('show');
+      reels.forEach((reel, idx) => {
+        reel.classList.remove('win', 'spinning');
+        reel.textContent = ['🎰', '🃏', '⭐'][idx];
+      });
+      setStatus('Tenés 3 oportunidades. Tocá el botón y descubrí si desbloqueaste tus 20 Free Spins.');
+      spinBtn.disabled = false;
+      trackEvent('PromoReset', { promo_name: '20 Free Spins' });
+    }
+
+    spinBtn.addEventListener('click', handleSpin);
+    startSpinBtn.addEventListener('click', () => {
+      scrollToGame();
+      handleSpin();
+    });
+    resetBtn.addEventListener('click', resetDemo);
+
+    registerBtn.addEventListener('click', () => {
+      trackEvent('OutboundRegisterClick', {
+        destination: CONFIG.REGISTER_URL,
+        prize_name: '20 Free Spins'
+      });
+      trackStandardEvent('Contact', {
+        content_name: 'JokerGol Register Click',
+        prize_name: '20 Free Spins'
+      });
+    });
+
+    whatsappBtn.addEventListener('click', () => {
+      trackStandardEvent('Contact', {
+        content_name: 'WhatsApp Free Spins Request',
+        method: 'whatsapp',
+        prize_name: '20 Free Spins'
+      });
+    });
+
+    supportBtn.addEventListener('click', () => {
+      trackStandardEvent('Contact', {
+        content_name: 'Support Chat Free Spins Request',
+        method: 'support_chat',
+        prize_name: '20 Free Spins'
+      });
+    });
+
+    formatTime(CONFIG.COUNTDOWN_SECONDS);
+  </script>
+</body>
+</html>
