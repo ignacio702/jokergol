@@ -681,13 +681,35 @@
     const REGISTER_URL = "https://trkrdr0.com/link/HXm3eB3Ope?affS1=landjoker";
     const JOKERGOL_LOGIN_URL = "https://trkrdr0.com/link/WRGKPpdq7o?affS1=landjoker";
 
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) {
+        return parts.pop().split(";").shift() || "";
+      }
+      return "";
+    }
+
     function buildTrackedUrl(baseUrl) {
       const incomingParams = new URLSearchParams(window.location.search);
       const finalUrl = new URL(baseUrl);
 
       incomingParams.forEach((value, key) => {
-        finalUrl.searchParams.set(key, value);
+        if (value) {
+          finalUrl.searchParams.set(key, value);
+        }
       });
+
+      const fbp = getCookie("_fbp");
+      const fbclid = incomingParams.get("fbclid") || "";
+
+      if (fbp) {
+        finalUrl.searchParams.set("affS4", fbp);
+      }
+
+      if (fbclid) {
+        finalUrl.searchParams.set("affS5", fbclid);
+      }
 
       return finalUrl.toString();
     }
@@ -720,7 +742,9 @@
 
         fbq('trackCustom', 'OutboundRegisterClick', {
           button_name: buttonLabel,
-          destination_url: url
+          destination_url: url,
+          affS4: new URL(url).searchParams.get('affS4') || '',
+          affS5: new URL(url).searchParams.get('affS5') || ''
         });
 
         setTimeout(safeRedirect, 300);
