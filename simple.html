@@ -598,14 +598,15 @@
     }
 
     document.addEventListener("DOMContentLoaded", function() {
-      const finalUrl = buildTrackedUrl(REGISTER_URL);
       const btn = document.getElementById("btnRegister");
 
       if (btn) {
-        btn.href = finalUrl;
+        btn.href = buildTrackedUrl(REGISTER_URL);
         btn.addEventListener("click", function(e) {
           e.preventDefault();
-          trackRegisterAndRedirect(finalUrl, "btnRegister_sticky");
+          const clickUrl = buildTrackedUrl(REGISTER_URL);
+          btn.href = clickUrl;
+          trackRegisterAndRedirect(clickUrl, "btnRegister_sticky");
         });
       }
 
