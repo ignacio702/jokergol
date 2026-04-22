@@ -762,19 +762,25 @@
       const el = document.getElementById(elementId);
       if (!el) return;
 
-      const finalUrl = buildTrackedUrl(baseUrl);
-      el.href = finalUrl;
+      el.href = buildTrackedUrl(baseUrl);
 
       el.addEventListener("click", function(e) {
         e.preventDefault();
-        trackRegisterAndRedirect(finalUrl, buttonLabel);
+        const clickUrl = buildTrackedUrl(baseUrl);
+        el.href = clickUrl;
+        trackRegisterAndRedirect(clickUrl, buttonLabel);
       });
     }
 
     function bindSimpleLink(elementId, baseUrl) {
       const el = document.getElementById(elementId);
       if (!el) return;
+
       el.href = buildTrackedUrl(baseUrl);
+
+      el.addEventListener("click", function() {
+        el.href = buildTrackedUrl(baseUrl);
+      });
     }
 
     document.addEventListener("DOMContentLoaded", function() {
