@@ -461,6 +461,7 @@
 
   <script>
     const REGISTER_URL = "https://trkrdr1.com/link/shlyVdGR8j?affS1=landsimp";
+    const DEFAULT_AFFS1 = "landsimp";
     const RESERVATION_MINUTES = 10;
 
     function getCookie(name) {
@@ -476,21 +477,49 @@
       const incomingParams = new URLSearchParams(window.location.search);
       const finalUrl = new URL(baseUrl);
 
-      incomingParams.forEach((value, key) => {
-        if (value) {
-          finalUrl.searchParams.set(key, value);
-        }
-      });
+      const incomingAffS1 = incomingParams.get("affS1");
+      const incomingAffS2 = incomingParams.get("affS2");
+      const incomingFbclid = incomingParams.get("fbclid") || "";
+      const incomingUtmSource = incomingParams.get("utm_source");
+      const incomingUtmMedium = incomingParams.get("utm_medium");
+      const incomingUtmCampaign = incomingParams.get("utm_campaign");
+      const incomingUtmContent = incomingParams.get("utm_content");
+      const incomingUtmTerm = incomingParams.get("utm_term");
+
+      finalUrl.searchParams.set("affS1", incomingAffS1 || DEFAULT_AFFS1);
+
+      if (incomingAffS2) {
+        finalUrl.searchParams.set("affS2", incomingAffS2);
+      }
+
+      if (incomingUtmSource) {
+        finalUrl.searchParams.set("utm_source", incomingUtmSource);
+      }
+
+      if (incomingUtmMedium) {
+        finalUrl.searchParams.set("utm_medium", incomingUtmMedium);
+      }
+
+      if (incomingUtmCampaign) {
+        finalUrl.searchParams.set("utm_campaign", incomingUtmCampaign);
+      }
+
+      if (incomingUtmContent) {
+        finalUrl.searchParams.set("utm_content", incomingUtmContent);
+      }
+
+      if (incomingUtmTerm) {
+        finalUrl.searchParams.set("utm_term", incomingUtmTerm);
+      }
 
       const fbp = getCookie("_fbp");
-      const fbclid = incomingParams.get("fbclid") || "";
 
       if (fbp) {
         finalUrl.searchParams.set("affS4", fbp);
       }
 
-      if (fbclid) {
-        finalUrl.searchParams.set("affS5", fbclid);
+      if (incomingFbclid) {
+        finalUrl.searchParams.set("affS5", incomingFbclid);
       }
 
       return finalUrl.toString();
