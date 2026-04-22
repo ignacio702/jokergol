@@ -680,6 +680,8 @@
   <script>
     const REGISTER_URL = "https://trkrdr1.com/link/shlyVdGR8j?affS1=landjoker";
     const JOKERGOL_LOGIN_URL = "https://trkrdr0.com/link/WRGKPpdq7o?affS1=landjoker";
+    const DEFAULT_AFFS1 = "landjoker";
+    const PASSTHROUGH_PARAMS = ["affS2", "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid"];
 
     function getCookie(name) {
       const value = `; ${document.cookie}`;
@@ -694,7 +696,10 @@
       const incomingParams = new URLSearchParams(window.location.search);
       const finalUrl = new URL(baseUrl);
 
-      incomingParams.forEach((value, key) => {
+      finalUrl.searchParams.set("affS1", DEFAULT_AFFS1);
+
+      PASSTHROUGH_PARAMS.forEach((key) => {
+        const value = incomingParams.get(key);
         if (value) {
           finalUrl.searchParams.set(key, value);
         }
